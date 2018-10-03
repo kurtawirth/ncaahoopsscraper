@@ -10,8 +10,6 @@ ReadPage <- read_html(Page)
 
 ReadSession <- html_session(Page)
 
-#dates <- seq(as.Date(StartDate), as.Date(EndDate), "day") %>% format("%B %d, %Y")
-
 dates <- seq(as.Date(StartDate), as.Date(EndDate), "day") %>% format("%m-%d-%Y")
 
 NumDates <- length(dates)
@@ -36,19 +34,22 @@ df <- data.frame(GameDate, HomeTeamName, HomeTeamScore, AwayTeamName, AwayTeamSc
 
 NumGames <- length(ReadPage %>% html_nodes(".teams"))
 
-for(game in 3:NumGames + 1){
+for(game in 2:NumGames + 1){
   
   HomeTeamName <- ReadPage %>% html_nodes(paste(".nohover:nth-child(", game, ") tr:nth-child(2) td:nth-child(1) a")) %>% html_text()
   
   AwayTeamName <- ReadPage %>% html_nodes(paste(".nohover:nth-child(", game, ") tr:nth-child(1) td:nth-child(1) a")) %>% html_text()
   
-  HomeTeamScore <- ReadPage %>% html_nodes("") %>% html_text()
+  HomeTeamScore <- ReadPage %>% html_nodes(paste(".nohover:nth-child(", game, ") tr:nth-child(2) td:nth-child(2)")) %>% html_text()
   
-  AwayTeamScore <- ReadPage %>% html_nodes("") %>% html_text()
+  AwayTeamScore <- ReadPage %>% html_nodes(paste(".nohover:nth-child(", game, ") tr:nth-child(1) td:nth-child(2)")) %>% html_text()
   
   GameDate <- ReadPage %>% html_nodes(".current strong") %>% html_text()
   
   tmp_df <- data.frame(GameDate, HomeTeamName, HomeTeamScore, AwayTeamName, AwayTeamScore)
+  
+  tmp_df <- tmp_df %>% 
+    dplyr::mutate_if(is.factor, as.character)
   
   df <- dplyr::bind_rows(df, tmp_df)
 
