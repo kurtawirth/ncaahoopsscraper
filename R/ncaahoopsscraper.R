@@ -6,7 +6,7 @@
 #'
 #' @author Kurt Wirth
 #'
-#' @param x The beginning date of data scraping, in the format
+#' @param x The beginning date of data scraping, in the format (TEST)
 #' "yyyy/mm/dd".
 #'
 #' @param y The ending date of data scraping, in the format
@@ -72,6 +72,8 @@ for(date in dates){
         dplyr::mutate_if(is.factor, as.character)
 
       df <- dplyr::bind_rows(df, tmp_df)}, error = function(e) print(e))
+
+      assign("scores", df, envir=globalenv())
 
     }}, error = function(e) print(e))
 
