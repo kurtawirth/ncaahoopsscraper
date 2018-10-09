@@ -1,6 +1,6 @@
 Package: ncaahoopsscraper
 Title: Scrapes NCAA Basketball Scores
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: person("Kurt", "Wirth", email = "kurtawirth@gmail.com", role = c("aut", "cre"))
 Description: Takes inputs for beginning and end of season and scrapes www.sports-reference.com for all scores between those dates (inclusive).
 Depends: R (>= 3.5.1)
