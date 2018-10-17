@@ -131,3 +131,5 @@ dat <- function(x){
 }
 
 out <- select(out, "V2", "V4", "V5", "V6", "V8", "V10", "V12", "V14", "V16", "V18", "V20")
+                 
+colnames(out) <- c("TeamName", "W-L", "AdjEM", "AdjO", "AdjD", "AdjT", "Luck", "SOSAdjEM", "SOSOppO", "SOSOppD", "NCSOSAdjEM")
