@@ -118,3 +118,14 @@ files = list.files(pattern="*.csv")
 DT = do.call(rbind, lapply(files, fread))
 
 write.csv(DT, "201718.csv")
+                 
+#SCRAPE KENPOM REGULARLY
+                 
+dat <- function(x){
+    base_url <- 'https://kenpom.com'
+    Sys.sleep(1)
+    r <- GET(base_url)
+    out <- readHTMLTable(as.character(content(r)), stringAsFactors=FALSE)
+    out <- data.table(out[[1]])
+    return(out)
+}
