@@ -1,8 +1,5 @@
 ncaahoopsscraper
 ================
-Kurt Wirth
-2018-10-08
-
 A tool to easily scrape NCAA basketball game results from [Sports Reference](https://www.sports-reference.com/cbb/).
 
 Install
@@ -22,7 +19,7 @@ Included in this package as dependents are [dplyr](https://github.com/tidyverse/
 Usage
 -----
 
-There is currently only one functions currently live for ncaahoopsscraper.
+There is currently only one function currently live for ncaahoopsscraper.
 
 Simply input the beginning date of the season desired in quotes followed by the end date. Importantly, these dates must be in YYYY/MM/DD format.
 
