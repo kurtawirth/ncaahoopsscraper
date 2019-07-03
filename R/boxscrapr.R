@@ -76,6 +76,9 @@ boxscrapr = function(x, y) {
 
             AwayBoxScoreTotal = AwayBoxScoreTotal[,c(22,19,21,20,18,1,2,3,4,5,6,7,8,9,10,11,12,13,16,14,15,17)]
 
+            AwayBoxScoreTotal <- AwayBoxScoreTotal %>%
+              dplyr::mutate_if(is.factor, as.character)
+
             df <- dplyr::bind_rows(df, AwayBoxScoreTotal)
 
             HomeBoxScoreTotal = box.scrape.text[(which(box.scrape.text=="School Totals")[2]+1) : (which(box.scrape.text=="School Totals")[2]+22)] %>%
@@ -84,6 +87,9 @@ boxscrapr = function(x, y) {
             colnames(HomeBoxScoreTotal) = c("FGM","FGA","FG%","3PTM","3PTA","3PT%","FTM","FTA","FT%","ORB","DRB","REB","AST","STL","BLK","TO","PF","PTS","TeamName","Opponent","Role","Date")
 
             HomeBoxScoreTotal = HomeBoxScoreTotal[,c(22,19,21,20,18,1,2,3,4,5,6,7,8,9,10,11,12,13,16,14,15,17)]
+
+            HomeBoxScoreTotal <- HomeBoxScoreTotal %>%
+              dplyr::mutate_if(is.factor, as.character)
 
             df <- dplyr::bind_rows(df, HomeBoxScoreTotal)}, error = function(e) print(e))
 
