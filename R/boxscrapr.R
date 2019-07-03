@@ -63,23 +63,29 @@ boxscrapr = function(x, y) {
 
             Team_Names = read_html(current_url) %>% rvest::html_nodes("div:nth-child(1) div strong a") %>% html_text()
 
-            AwayTeam = Team_Names[1]
+            AwayTeamName = Team_Names[1]
 
-            HomeTeam = Team_Names[2]
+            HomeTeamName = Team_Names[2]
 
             box.scrape.text = html_text(html_nodes(read_html(current_url), xpath='//*[contains(concat( " ", @class, " " ), concat( " ", "right", " " ))] | //*[contains(concat( " ", @class, " " ), concat( " ", "left", " " ))]'))
 
-            HomeBoxScoreRaw = box.scrape.text[566:587]
+            AwayBoxScoreTotal = box.scrape.text[(which(box.scrape.text=="School Totals")[1]+1) : (which(box.scrape.text=="School Totals")[1]+22)] %>%
+              t() %>% data.frame() %>% select(-1,-5,-6,-7) %>% mutate(TeamName = AwayTeamName, Opponent = HomeTeamName, Role = "Away", Date = GameDate)
 
-            HomeBoxScore = data.frame("Date" = GameDate, "TeamName" = HomeTeam, "FGM" = HomeBoxScoreRaw[2], "FGA" = HomeBoxScoreRaw[3], "FG%" = round(as.numeric(HomeBoxScoreRaw[2])/as.numeric(HomeBoxScoreRaw[3]), 3), "3PTM" = HomeBoxScoreRaw[8], "3PTA" = HomeBoxScoreRaw[9], "3PT%" = round(as.numeric(HomeBoxScoreRaw[8])/as.numeric(HomeBoxScoreRaw[9]), 3), "FTM" = HomeBoxScoreRaw[11], "FTA" = HomeBoxScoreRaw[12], "FT%" = round(as.numeric(HomeBoxScoreRaw[11])/as.numeric(HomeBoxScoreRaw[12]), 3), "ORB" = HomeBoxScoreRaw[14], "DRB" = HomeBoxScoreRaw[15], "REB" = HomeBoxScoreRaw[16], "AST" = HomeBoxScoreRaw[17], "STL" = HomeBoxScoreRaw[18], "BLK" = HomeBoxScoreRaw[19], "TO" = HomeBoxScoreRaw[20], "PF" = HomeBoxScoreRaw[21], "PTS" = HomeBoxScoreRaw[22])
+            colnames(AwayBoxScoreTotal) = c("FGM","FGA","FG%","3PTM","3PTA","3PT%","FTM","FTA","FT%","ORB","DRB","REB","AST","STL","BLK","TO","PF","PTS","TeamName","Opponent","Role","Date")
 
-            df <- dplyr::bind_rows(df, HomeBoxScore)
+            AwayBoxScoreTotal = AwayBoxScoreTotal[,c(22,19,21,20,18,1,2,3,4,5,6,7,8,9,10,11,12,13,16,14,15,17)]
 
-            AwayBoxScoreRaw = box.scrape.text[267:288]
+            df <- dplyr::bind_rows(df, AwayBoxScoreTotal)
 
-            AwayBoxScore = data.frame("Date" = GameDate, "TeamName" = AwayTeam, "FGM" = AwayBoxScoreRaw[2], "FGA" = AwayBoxScoreRaw[3], "FG%" = round(as.numeric(AwayBoxScoreRaw[2])/as.numeric(AwayBoxScoreRaw[3]), 3), "3PTM" = AwayBoxScoreRaw[8], "3PTA" = AwayBoxScoreRaw[9], "3PT%" = round(as.numeric(AwayBoxScoreRaw[8])/as.numeric(AwayBoxScoreRaw[9]), 3), "FTM" = AwayBoxScoreRaw[11], "FTA" = AwayBoxScoreRaw[12], "FT%" = round(as.numeric(AwayBoxScoreRaw[11])/as.numeric(AwayBoxScoreRaw[12]), 3), "ORB" = AwayBoxScoreRaw[14], "DRB" = AwayBoxScoreRaw[15], "REB" = AwayBoxScoreRaw[16], "AST" = AwayBoxScoreRaw[17], "STL" = AwayBoxScoreRaw[18], "BLK" = AwayBoxScoreRaw[19], "TO" = AwayBoxScoreRaw[20], "PF" = AwayBoxScoreRaw[21], "PTS" = AwayBoxScoreRaw[22])
+            HomeBoxScoreTotal = box.scrape.text[(which(box.scrape.text=="School Totals")[2]+1) : (which(box.scrape.text=="School Totals")[2]+22)] %>%
+              t() %>% data.frame() %>% select(-1,-5,-6,-7) %>% mutate(TeamName = HomeTeamName, Opponent = AwayTeamName, Role = "Home", Date = GameDate)
 
-            df <- dplyr::bind_rows(df, AwayBoxScore)}, error = function(e) print(e))
+            colnames(HomeBoxScoreTotal) = c("FGM","FGA","FG%","3PTM","3PTA","3PT%","FTM","FTA","FT%","ORB","DRB","REB","AST","STL","BLK","TO","PF","PTS","TeamName","Opponent","Role","Date")
+
+            HomeBoxScoreTotal = HomeBoxScoreTotal[,c(22,19,21,20,18,1,2,3,4,5,6,7,8,9,10,11,12,13,16,14,15,17)]
+
+            df <- dplyr::bind_rows(df, HomeBoxScoreTotal)}, error = function(e) print(e))
 
       }}, error = function(e) print(e))
 
