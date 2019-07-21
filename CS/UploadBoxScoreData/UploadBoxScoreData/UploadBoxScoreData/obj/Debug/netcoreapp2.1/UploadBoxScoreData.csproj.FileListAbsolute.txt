@@ -1,0 +1,11 @@
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\bin\Debug\netcoreapp2.1\UploadBoxScoreData.deps.json
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\bin\Debug\netcoreapp2.1\UploadBoxScoreData.runtimeconfig.json
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\bin\Debug\netcoreapp2.1\UploadBoxScoreData.runtimeconfig.dev.json
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\bin\Debug\netcoreapp2.1\UploadBoxScoreData.dll
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\bin\Debug\netcoreapp2.1\UploadBoxScoreData.pdb
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\obj\Debug\netcoreapp2.1\UploadBoxScoreData.csprojAssemblyReference.cache
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\obj\Debug\netcoreapp2.1\UploadBoxScoreData.csproj.CoreCompileInputs.cache
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\obj\Debug\netcoreapp2.1\UploadBoxScoreData.AssemblyInfoInputs.cache
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\obj\Debug\netcoreapp2.1\UploadBoxScoreData.AssemblyInfo.cs
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\obj\Debug\netcoreapp2.1\UploadBoxScoreData.dll
+E:\Documents\ncaahoopsscraper\CS\UploadBoxScoreData\UploadBoxScoreData\UploadBoxScoreData\obj\Debug\netcoreapp2.1\UploadBoxScoreData.pdb
