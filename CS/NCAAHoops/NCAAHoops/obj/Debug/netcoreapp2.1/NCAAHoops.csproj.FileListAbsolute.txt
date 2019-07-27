@@ -1,0 +1,14 @@
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.deps.json
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.runtimeconfig.json
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.runtimeconfig.dev.json
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.dll
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.csprojAssemblyReference.cache
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.csproj.CoreCompileInputs.cache
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.RazorAssemblyInfo.cache
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.RazorAssemblyInfo.cs
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.AssemblyInfoInputs.cache
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.AssemblyInfo.cs
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.RazorTargetAssemblyInfo.cache
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.pdb
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.dll
+C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.pdb
