@@ -53,28 +53,28 @@ namespace NCAAHoops.Controllers
         [HttpPost]
         public ActionResult<string> Post([FromBody] BoxScores boxScores)
         {
-            AmazonDynamoDBClient client = new AmazonDynamoDBClient();
+            AmazonDynamoDBClient client = new AmazonDynamoDBClient("AKIATE3XJ4OF7CAOTTUN", "JBCFrJkt/eAqXcNNyyCCnt3EOr2oaZ+CA9qfoiAV", Amazon.RegionEndpoint.USEast1);
 
             Dictionary<string, AttributeValue> attributes = new Dictionary<string, AttributeValue>();
-            attributes["date"] = new AttributeValue { S = boxScores.date };
-            attributes["teamName"] = new AttributeValue { S = boxScores.teamName };
-            attributes["role"] = new AttributeValue { S = boxScores.role };
-            attributes["opponent"] = new AttributeValue { S = boxScores.opponent };
-            attributes["pts"] = new AttributeValue { N = boxScores.pts.ToString() };
-            attributes["fgm"] = new AttributeValue { N = boxScores.fgm.ToString() };
-            attributes["fga"] = new AttributeValue { N = boxScores.fga.ToString() };
-            attributes["tptm"] = new AttributeValue { N = boxScores.tptm.ToString() };
-            attributes["tpta"] = new AttributeValue { N = boxScores.tpta.ToString() };
-            attributes["ftm"] = new AttributeValue { N = boxScores.ftm.ToString() };
-            attributes["fta"] = new AttributeValue { N = boxScores.fta.ToString() };
-            attributes["orb"] = new AttributeValue { N = boxScores.orb.ToString() };
-            attributes["drb"] = new AttributeValue { N = boxScores.drb.ToString() };
-            attributes["reb"] = new AttributeValue { N = boxScores.reb.ToString() };
-            attributes["ast"] = new AttributeValue { N = boxScores.ast.ToString() };
-            attributes["to"] = new AttributeValue { N = boxScores.to.ToString() };
-            attributes["stl"] = new AttributeValue { N = boxScores.stl.ToString() };
-            attributes["blk"] = new AttributeValue { N = boxScores.blk.ToString() };
-            attributes["pf"] = new AttributeValue { N = boxScores.pf.ToString() };
+            attributes["Date"] = new AttributeValue { S = boxScores.date };
+            attributes["TeamName"] = new AttributeValue { S = boxScores.teamName };
+            attributes["Role"] = new AttributeValue { S = boxScores.role };
+            attributes["Opponent"] = new AttributeValue { S = boxScores.opponent };
+            attributes["PTS"] = new AttributeValue { N = boxScores.pts.ToString() };
+            attributes["FGM"] = new AttributeValue { N = boxScores.fgm.ToString() };
+            attributes["FGA"] = new AttributeValue { N = boxScores.fga.ToString() };
+            attributes["3PTM"] = new AttributeValue { N = boxScores.tptm.ToString() };
+            attributes["3PTA"] = new AttributeValue { N = boxScores.tpta.ToString() };
+            attributes["FTM"] = new AttributeValue { N = boxScores.ftm.ToString() };
+            attributes["FTA"] = new AttributeValue { N = boxScores.fta.ToString() };
+            attributes["ORB"] = new AttributeValue { N = boxScores.orb.ToString() };
+            attributes["DRB"] = new AttributeValue { N = boxScores.drb.ToString() };
+            attributes["REB"] = new AttributeValue { N = boxScores.reb.ToString() };
+            attributes["AST"] = new AttributeValue { N = boxScores.ast.ToString() };
+            attributes["TO"] = new AttributeValue { N = boxScores.to.ToString() };
+            attributes["STL"] = new AttributeValue { N = boxScores.stl.ToString() };
+            attributes["BLK"] = new AttributeValue { N = boxScores.blk.ToString() };
+            attributes["PF"] = new AttributeValue { N = boxScores.pf.ToString() };
 
             PutItemRequest request = new PutItemRequest
             {
@@ -83,26 +83,6 @@ namespace NCAAHoops.Controllers
             };
 
             client.PutItemAsync(request);
-
-            //return "Date: " + boxScores.date + "\n"
-            //    + "TeamName: " + boxScores.teamName + "\n"
-            //    + "Role: " + boxScores.role + "\n"
-            //    + "Opponent: " + boxScores.opponent + "\n"
-            //    + "Pts: " + boxScores.pts + "\n"
-            //    + "FGM: " + boxScores.fgm + "\n"
-            //    + "FGA: " + boxScores.fga + "\n"
-            //    + "3PTM: " + boxScores.tptm + "\n"
-            //    + "3PTA: " + boxScores.tpta + "\n"
-            //    + "FTM: " + boxScores.ftm + "\n"
-            //    + "FTA: " + boxScores.fta + "\n"
-            //    + "ORB: " + boxScores.orb + "\n"
-            //    + "DRB: " + boxScores.drb + "\n"
-            //    + "REB: " + boxScores.reb + "\n"
-            //    + "AST: " + boxScores.ast + "\n"
-            //    + "TO: " + boxScores.to + "\n"
-            //    + "STL: " + boxScores.stl + "\n"
-            //    + "BLK: " + boxScores.blk + "\n"
-            //    + "PF: " + boxScores.pf;
 
             return "Successfully placed item for game: " + boxScores.date + ", " + boxScores.teamName;
         }

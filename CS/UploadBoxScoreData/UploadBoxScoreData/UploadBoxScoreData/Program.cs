@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net;
+using System.Text;
 
 namespace UploadBoxScoreData
 {
@@ -26,10 +28,12 @@ namespace UploadBoxScoreData
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         string[] colHeaders = new string[] { "id", "date", "teamName", "role", "opponent", "pts", "fgm", "fga", "ft%", "tptm", "tpta", "tpt%", "ftm", "fta", "ft%", "orb", "drb", "reb", "ast", "to", "stl", "blk", "pf" };
-                        //string headers = reader.ReadLine();  // Need to trash the first line which contains only headers
+                        string headers = reader.ReadLine();  // Need to trash the first line which contains only headers
 
                         while (reader.Peek() != -1)
                         {
+                            System.Threading.Thread.Sleep(200);
+
                             string line = reader.ReadLine();
                             string[] values = line.Split("\",\"");
                             Console.Write("Extracted data row: ");
@@ -55,7 +59,7 @@ namespace UploadBoxScoreData
                             }
 
                             requestBody += "}";
-                            Console.WriteLine(requestBody);
+                            Console.WriteLine(SendPostRequest(requestBody));
                             numRecords++;
                         }
                     }
@@ -63,6 +67,44 @@ namespace UploadBoxScoreData
             }
 
             Console.WriteLine("Total number of records found: " + numRecords);
+        }
+
+        private static string SendPostRequest(string _body)
+        {
+            WebRequest request = WebRequest.Create("http://ncaahoopsdata-env.ju4dv2armd.us-east-1.elasticbeanstalk.com/api/boxScores");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            byte[] content = Encoding.ASCII.GetBytes(_body);
+            request.ContentLength = content.Length;
+            Stream stream = request.GetRequestStream();
+            stream.Write(content, 0, content.Length);
+            stream.Close();
+
+            try
+            {
+                WebResponse response = request.GetResponse();
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            catch
+            {
+                return "Bad request. Skipping item.";
+            }
+
+            //using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
+            //{
+            //    writer.Write(_body);
+            //    writer.Flush();
+            //    writer.Close();
+
+            //    WebResponse response = request.GetResponse();
+            //    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            //    {
+            //        return reader.ReadToEnd();
+            //    }
+            //}
         }
     }
 }

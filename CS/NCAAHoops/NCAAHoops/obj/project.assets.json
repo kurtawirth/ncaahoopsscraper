@@ -11909,23 +11909,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dan\\.nuget\\packages\\": {},
+    "C:\\Users\\Colgruv\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dan\\source\\repos\\NCAAHoops\\NCAAHoops\\NCAAHoops.csproj",
+      "projectUniqueName": "E:\\Documents\\ncaahoopsscraper\\CS\\NCAAHoops\\NCAAHoops\\NCAAHoops.csproj",
       "projectName": "NCAAHoops",
-      "projectPath": "C:\\Users\\Dan\\source\\repos\\NCAAHoops\\NCAAHoops\\NCAAHoops.csproj",
-      "packagesPath": "C:\\Users\\Dan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dan\\source\\repos\\NCAAHoops\\NCAAHoops\\obj\\",
+      "projectPath": "E:\\Documents\\ncaahoopsscraper\\CS\\NCAAHoops\\NCAAHoops\\NCAAHoops.csproj",
+      "packagesPath": "C:\\Users\\Colgruv\\.nuget\\packages\\",
+      "outputPath": "E:\\Documents\\ncaahoopsscraper\\CS\\NCAAHoops\\NCAAHoops\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Colgruv\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

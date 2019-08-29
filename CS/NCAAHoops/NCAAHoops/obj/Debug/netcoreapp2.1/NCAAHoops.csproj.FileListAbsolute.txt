@@ -12,3 +12,17 @@ C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.
 C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.pdb
 C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.dll
 C:\Users\Dan\source\repos\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.pdb
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.deps.json
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.runtimeconfig.json
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.runtimeconfig.dev.json
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.dll
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\bin\Debug\netcoreapp2.1\NCAAHoops.pdb
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.csprojAssemblyReference.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.csproj.CoreCompileInputs.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.RazorAssemblyInfo.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.RazorAssemblyInfo.cs
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.AssemblyInfoInputs.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.AssemblyInfo.cs
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.RazorTargetAssemblyInfo.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.dll
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\NCAAHoops\obj\Debug\netcoreapp2.1\NCAAHoops.pdb

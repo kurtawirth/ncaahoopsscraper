@@ -1,0 +1,14 @@
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\bin\Debug\netcoreapp2.1\RequestTest.deps.json
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\bin\Debug\netcoreapp2.1\RequestTest.runtimeconfig.json
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\bin\Debug\netcoreapp2.1\RequestTest.runtimeconfig.dev.json
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\bin\Debug\netcoreapp2.1\RequestTest.dll
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\bin\Debug\netcoreapp2.1\RequestTest.pdb
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\bin\Debug\netcoreapp2.1\NCAAHoops.dll
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\bin\Debug\netcoreapp2.1\NCAAHoops.pdb
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\obj\Debug\netcoreapp2.1\RequestTest.csprojAssemblyReference.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\obj\Debug\netcoreapp2.1\RequestTest.csproj.CoreCompileInputs.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\obj\Debug\netcoreapp2.1\RequestTest.AssemblyInfoInputs.cache
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\obj\Debug\netcoreapp2.1\RequestTest.AssemblyInfo.cs
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\obj\Debug\netcoreapp2.1\RequestTest.csproj.CopyComplete
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\obj\Debug\netcoreapp2.1\RequestTest.dll
+E:\Documents\ncaahoopsscraper\CS\NCAAHoops\RequestTest\obj\Debug\netcoreapp2.1\RequestTest.pdb

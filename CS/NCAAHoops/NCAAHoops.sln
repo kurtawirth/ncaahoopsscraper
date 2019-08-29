@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCAAHoops", "NCAAHoops\NCAAHoops.csproj", "{D956DD1D-255A-435F-847D-8365FF529037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCAAHoops", "NCAAHoops\NCAAHoops.csproj", "{D956DD1D-255A-435F-847D-8365FF529037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestTest", "RequestTest\RequestTest.csproj", "{474A4458-9E3A-4716-9110-FAA60B27C665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D956DD1D-255A-435F-847D-8365FF529037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D956DD1D-255A-435F-847D-8365FF529037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D956DD1D-255A-435F-847D-8365FF529037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{474A4458-9E3A-4716-9110-FAA60B27C665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{474A4458-9E3A-4716-9110-FAA60B27C665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{474A4458-9E3A-4716-9110-FAA60B27C665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{474A4458-9E3A-4716-9110-FAA60B27C665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
