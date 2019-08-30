@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
+using Amazon.Util;
 
 namespace NCAAHoops.Controllers
 {
@@ -37,9 +38,41 @@ namespace NCAAHoops.Controllers
     {
         // GET api/boxscores
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Dictionary<string,AttributeValue>>> Get(string teamName)
         {
-            return new string[] { "value1", "value2" };
+            AmazonDynamoDBClient client = new AmazonDynamoDBClient("AKIATE3XJ4OF7CAOTTUN", "JBCFrJkt/eAqXcNNyyCCnt3EOr2oaZ+CA9qfoiAV", Amazon.RegionEndpoint.USEast1);
+
+            DateTime startDate = new DateTime(2018, 6, 1);
+            DateTime endDate = new DateTime(2019, 6, 1);
+
+            var request = new QueryRequest
+            {
+                TableName = "NCAAHoops_BoxScores",
+                KeyConditionExpression = "TeamName = :v_teamName and Date > :v_startDate and Date < :v_endDate",
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue>
+                {
+                    { ":v_teamName", new AttributeValue { S = teamName } },
+                    { "v_startDate", new AttributeValue { S = startDate.ToString(AWSSDKUtils.ISO8601DateFormat) } },
+                    { ":v_endDate", new AttributeValue { S = endDate.ToString(AWSSDKUtils.ISO8601DateFormat) } }
+                }
+            };
+
+            var response = client.QueryAsync(request);
+
+            while (!response.IsCompleted)
+            {
+                // Wait
+            }
+
+            if (!response.IsFaulted)
+            {
+                return response.Result.Items.ToArray();
+            }
+
+            Dictionary<string, AttributeValue> dictionary = new Dictionary<string, AttributeValue>();
+            dictionary.Add("Error", new AttributeValue { S = response.Exception.ToString() });
+            return new Dictionary<string, AttributeValue>[] { dictionary };
+            //return new string[] { "value1", "value2" };
         }
 
         // GET api/boxscores/5
