@@ -1,0 +1,17 @@
+setwd("")
+
+bsdata = list()
+require(data.table)
+library(dplyr)
+bsdata[[1]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201011.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[2]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201112.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[3]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201213.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[4]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201314.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[5]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201415.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[6]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201516.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[7]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201617.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[8]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201718.csv", header = T, sep = ',') %>% as.data.frame()
+bsdata[[9]] = data.table::fread("~/Programming/ncaahoopsscraper/data/BoxScores/201819.csv", header = T, sep = ',') %>% as.data.frame()
+boxscores_total = bind_rows(bsdata) %>% select(-V1) %>% mutate(Date = as.Date(Date, "%B %d, %Y")) %>%
+  rename(PCT_3 = "3PT%", PCT_FG = "FG%", PCT_FT = "FT%")
+save(boxscores_total, file = "boxscores_total.RDA")
