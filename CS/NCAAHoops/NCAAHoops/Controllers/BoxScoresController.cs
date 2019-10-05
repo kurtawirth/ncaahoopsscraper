@@ -40,7 +40,7 @@ namespace NCAAHoops.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Dictionary<string,string>>> Get(string teamName)
         {
-            AmazonDynamoDBClient client = new AmazonDynamoDBClient("AKIATE3XJ4OF7CAOTTUN", "JBCFrJkt/eAqXcNNyyCCnt3EOr2oaZ+CA9qfoiAV", Amazon.RegionEndpoint.USEast1);
+            AmazonDynamoDBClient client = new AmazonDynamoDBClient("", "", Amazon.RegionEndpoint.USEast1);
             Dictionary<string, string> dictionary;
 
             DateTime startDate = new DateTime(2018, 6, 1);
