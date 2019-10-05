@@ -4,7 +4,7 @@
     "profile" : "default",
     "region"  : "us-east-1",
     "application" : "NCAAHoopsData",
-    "environment" : "Ncaahoopsdata-env",
+    "environment" : "Ncaahoopsdata-env-1",
     "iis-website" : "Default Web Site",
     "app-path"    : "/",
     "enable-xray" : false

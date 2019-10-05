@@ -7,6 +7,8 @@ namespace UploadBoxScoreData
 {
     class Program
     {
+        private static string[] dates = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+
         static void Main(string[] args)
         {
             SendBoxScores();
@@ -48,6 +50,9 @@ namespace UploadBoxScoreData
                                 // Also, no need to store an explicit ID as the date and team name result in a unique identifier
                                 if (!colHeaders[colNum].Contains("%") && colHeaders[colNum] != "id")
                                 {
+                                    if (colHeaders[colNum] == "date")
+                                        trimmed = ConvertDate(trimmed);
+
                                     requestBody += "\"" + colHeaders[colNum] + "\":";
                                     if (colNum > 0 && colNum < 5) requestBody += "\"";
                                     requestBody += trimmed;
@@ -69,9 +74,16 @@ namespace UploadBoxScoreData
             Console.WriteLine("Total number of records found: " + numRecords);
         }
 
+        private static string ConvertDate(string _date)
+        {
+            string dateNoComma = _date.Replace(",", "");
+            string[] dateSplit = dateNoComma.Split(' ');
+            return dateSplit[2] + "-" + (Array.IndexOf(dates, dateSplit[0]) + 1).ToString() + "-" + dateSplit[1];
+        }
+
         private static string SendPostRequest(string _body)
         {
-            WebRequest request = WebRequest.Create("http://ncaahoopsdata-env.ju4dv2armd.us-east-1.elasticbeanstalk.com/api/boxScores");
+            WebRequest request = WebRequest.Create("http://ncaahoopsdata-env-1.ju4dv2armd.us-east-1.elasticbeanstalk.com/api/boxScores");
             request.Method = "POST";
             request.ContentType = "application/json";
             byte[] content = Encoding.ASCII.GetBytes(_body);

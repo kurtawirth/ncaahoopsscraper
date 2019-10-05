@@ -38,9 +38,10 @@ namespace NCAAHoops.Controllers
     {
         // GET api/boxscores
         [HttpGet]
-        public ActionResult<IEnumerable<Dictionary<string,AttributeValue>>> Get(string teamName)
+        public ActionResult<IEnumerable<Dictionary<string,string>>> Get(string teamName)
         {
             AmazonDynamoDBClient client = new AmazonDynamoDBClient("AKIATE3XJ4OF7CAOTTUN", "JBCFrJkt/eAqXcNNyyCCnt3EOr2oaZ+CA9qfoiAV", Amazon.RegionEndpoint.USEast1);
+            Dictionary<string, string> dictionary;
 
             DateTime startDate = new DateTime(2018, 6, 1);
             DateTime endDate = new DateTime(2019, 6, 1);
@@ -48,31 +49,59 @@ namespace NCAAHoops.Controllers
             var request = new QueryRequest
             {
                 TableName = "NCAAHoops_BoxScores",
-                KeyConditionExpression = "TeamName = :v_teamName and Date > :v_startDate and Date < :v_endDate",
+                KeyConditionExpression = "TeamName = :v_teamName AND #d BETWEEN :v_startDate AND :v_endDate",
                 ExpressionAttributeValues = new Dictionary<string, AttributeValue>
                 {
                     { ":v_teamName", new AttributeValue { S = teamName } },
-                    { "v_startDate", new AttributeValue { S = startDate.ToString(AWSSDKUtils.ISO8601DateFormat) } },
+                    { ":v_startDate", new AttributeValue { S = startDate.ToString(AWSSDKUtils.ISO8601DateFormat) } },
                     { ":v_endDate", new AttributeValue { S = endDate.ToString(AWSSDKUtils.ISO8601DateFormat) } }
+                },
+                ExpressionAttributeNames = new Dictionary<string, string>
+                {
+                    { "#d", "Date" }
                 }
             };
 
-            var response = client.QueryAsync(request);
+            var task = new Task<QueryResponse>(() => { return SendRequest(client, request).Result; });
 
-            while (!response.IsCompleted)
+            try
             {
-                // Wait
+                task.RunSynchronously();
+            }
+            catch (Exception e)
+            {
+                dictionary = new Dictionary<string, string>();
+                dictionary.Add("Error",  e.Message);
+                return new Dictionary<string, string>[] { dictionary };
             }
 
-            if (!response.IsFaulted)
+            if (!task.IsFaulted)
             {
-                return response.Result.Items.ToArray();
+                List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
+                foreach (Dictionary<string, AttributeValue> dict in task.Result.Items)
+                {
+                    Dictionary<string, string> currentDictionary = new Dictionary<string, string>();
+                    foreach (KeyValuePair<string, AttributeValue> keyVal in dict)
+                    {
+                        string value = (keyVal.Value.S != null) ? keyVal.Value.S : keyVal.Value.N;
+                        currentDictionary.Add(keyVal.Key, value);
+                    }
+                    result.Add(currentDictionary);
+                }
+
+                return result;
             }
 
-            Dictionary<string, AttributeValue> dictionary = new Dictionary<string, AttributeValue>();
-            dictionary.Add("Error", new AttributeValue { S = response.Exception.ToString() });
-            return new Dictionary<string, AttributeValue>[] { dictionary };
+            dictionary = new Dictionary<string, string>();
+            dictionary.Add("Error", "Unknown error");
+            return new Dictionary<string, string>[] { dictionary };
             //return new string[] { "value1", "value2" };
+        }
+
+        private async Task<QueryResponse> SendRequest(AmazonDynamoDBClient _client, QueryRequest _request)
+        {
+            QueryResponse response = await _client.QueryAsync(_request);
+            return response;
         }
 
         // GET api/boxscores/5
