@@ -26,15 +26,19 @@ library(dplyr)
 library(stringr)
 
 oddscrapr = function(x, y) {
-
+  
+  select <- dplyr::select; rename <- dplyr::rename; mutate <- dplyr::mutate
+  
+  summarize <- dplyr::summarize; arrange <- dplyr::arrange; filter <- dplyr::filter; slice <- dplyr::slice
+  
   StartDate = x
-
+  
   EndDate = y
-
+  
   dates = seq(as.Date(StartDate), as.Date(EndDate), "day") %>% format("%m-%d-%Y")
-
+  
   df = data.frame()
-
+  
   strsplit <- function(x,
                        split,
                        type = "remove",
@@ -61,53 +65,39 @@ oddscrapr = function(x, y) {
     }
     return(out)
   }
-
+  
   for(date in dates){
     tryCatch({
-
+      
       split = unlist(strsplit(date, "-"))
       month = split[1]
       day = split[2]
       year = split[3]
-
-      Page = paste("https://www.sportsbookreview.com/betting-odds/ncaa-basketball/pointspread/?date=",year,month,day, sep="")
-
-      ReadPage = read_html(Page)
-
-      NumGames = length(ReadPage %>% rvest::html_nodes("._3zKaX"))
-
+      
+      Page = paste("https://www.pickmonitor.com/past-odds/",year,"-",month,"-",day, sep="")
+      
+      #ReadPage = read_html(Page)
+      
       GameDate = date
-
-      TeamNames = html_text(html_nodes(read_html(Page), xpath = '//*[contains(concat( " ", @class, " " ), concat( " ", "_3O1Gx", " " ))]'))
-
-      TeamNamesDF = data.frame(TeamName = gsub("\\s*\\([^\\)]+\\) ","",as.character(TeamNames)))
-
-      Odds1 = data.frame(TeamName = TeamNamesDF[seq(1,nrow(TeamNamesDF) - 1, 2),], OpponentName = TeamNamesDF[seq(2,nrow(TeamNamesDF), 2),]) %>% mutate(order = row_number())
-
-      Odds2 = Odds1 %>% rename(TeamName = OpponentName, OpponentName = TeamName) %>% select(TeamName, OpponentName) %>% mutate(order = row_number())
-
-      LinesText = html_text(html_nodes(read_html(Page), xpath = '//*[contains(concat( " ", @class, " " ), concat( " ", "_3zKaX", " " ))]'))
-
-      LinesPct = sapply(LinesText, function(x) str_split(x, "%", simplify = TRUE)[3], USE.NAMES = FALSE)
-
-      LinesDash = sapply(LinesText, function(x) str_split(x, "--", simplify = TRUE)[2], USE.NAMES = FALSE)
-
-      Lines = data.frame(LinesPct = LinesPct, LinesDash = LinesDash) %>% mutate(LinesPct = as.character(LinesPct), LinesDash = as.character(LinesDash)) %>% mutate(Lines = coalesce(LinesPct, LinesDash)) %>% select(3)
-
-      LinesSplit = as.data.frame(matrix(unlist(strsplit(Lines$Lines, "\\+|-", type="before")), ncol = 4, byrow = TRUE)) %>%
-        sapply(function(x) str_replace(x,"[½]",".5")) %>% as.data.frame() %>%
-        sapply(function(x) as.numeric(str_replace(x,"[\\+]",""))) %>% as.data.frame()
-
-      AwayOdds = bind_cols(Odds1, Line = LinesSplit$V1)
-
-      HomeOdds = bind_cols(Odds2, Line = LinesSplit$V3)
-
-      Odds = HomeOdds %>% bind_rows(AwayOdds) %>% arrange(order) %>% select(-order) %>% mutate(Date = as.Date(paste(year, month, day, sep = "-")))
-
-    }, error = function(e) print(e))
-
+      
+      OddsText = html_text(html_nodes(read_html(Page), xpath = "//td | //h3"))
+      
+      Begin = which(OddsText=="NCAA Basketball") + 1
+      
+      End = Begin + min(which((grepl("^[A-Za-z ]+$", OddsText[Begin : length(OddsText)])) == TRUE)) - 2
+      
+      Odds = as.data.frame(matrix(OddsText[Begin : End], ncol = 5, byrow = TRUE)) %>% select(-V1, -V3, -V5) %>%
+        tidyr::separate(V2, into = c("AwayTeamName", "HomeTeamName"), sep = "vs") %>%
+        tidyr::separate(V4, into = c("Line", "ProfitLine"), sep = " ") %>% 
+        mutate(AwayTeamName = str_trim(gsub('[0-9]+', '', AwayTeamName))) %>%
+        mutate(HomeTeamName = str_trim(gsub('[0-9]+', '', HomeTeamName))) %>%
+        mutate(Line = as.numeric(Line)) %>% mutate(ProfitLine = as.numeric(ProfitLine)) %>%
+        mutate(Date = as.Date(paste(year, month, day, sep = "-")))
+      
+      }, error = function(e) print(e))
+    
     df <- dplyr::bind_rows(df, Odds)
-
+    
   }
   assign("BettingLines", df, envir=globalenv())
 }
