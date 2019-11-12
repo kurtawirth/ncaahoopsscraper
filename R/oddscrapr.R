@@ -26,19 +26,19 @@ library(dplyr)
 library(stringr)
 
 oddscrapr = function(x, y) {
-  
+
   select <- dplyr::select; rename <- dplyr::rename; mutate <- dplyr::mutate
-  
+
   summarize <- dplyr::summarize; arrange <- dplyr::arrange; filter <- dplyr::filter; slice <- dplyr::slice
-  
+
   StartDate = x
-  
+
   EndDate = y
-  
+
   dates = seq(as.Date(StartDate), as.Date(EndDate), "day") %>% format("%m-%d-%Y")
-  
+
   df = data.frame()
-  
+
   strsplit <- function(x,
                        split,
                        type = "remove",
@@ -65,39 +65,40 @@ oddscrapr = function(x, y) {
     }
     return(out)
   }
-  
+
   for(date in dates){
     tryCatch({
-      
+
       split = unlist(strsplit(date, "-"))
       month = split[1]
       day = split[2]
       year = split[3]
-      
+
       Page = paste("https://www.pickmonitor.com/past-odds/",year,"-",month,"-",day, sep="")
-      
-      #ReadPage = read_html(Page)
-      
+
       GameDate = date
-      
+
       OddsText = html_text(html_nodes(read_html(Page), xpath = "//td | //h3"))
-      
+
       Begin = which(OddsText=="NCAA Basketball") + 1
-      
-      End = Begin + min(which((grepl("^[A-Za-z ]+$", OddsText[Begin : length(OddsText)])) == TRUE)) - 2
-      
-      Odds = as.data.frame(matrix(OddsText[Begin : End], ncol = 5, byrow = TRUE)) %>% select(-V1, -V3, -V5) %>%
+
+      End = Begin + min(which((grepl("^[A-Za-z -]+$", OddsText[Begin : length(OddsText)])) == TRUE)[which(OddsText[Begin : length(OddsText)][which((grepl("^[A-Za-z -]+$", OddsText[Begin : length(OddsText)])) == TRUE)]!="-")]) - 2
+
+      Odds = as.data.frame(matrix(OddsText[Begin : End], ncol = 5, byrow = TRUE)) %>% select(-V1) %>%
         tidyr::separate(V2, into = c("AwayTeamName", "HomeTeamName"), sep = "vs") %>%
-        tidyr::separate(V4, into = c("Line", "ProfitLine"), sep = " ") %>% 
+        tidyr::separate(V4, into = c("Line", "Line_Profit"), sep = " ") %>%
+        tidyr::separate(V5, into = c("OverUnder", "Line_OverUnder"), sep = " ") %>%
         mutate(AwayTeamName = str_trim(gsub('[0-9]+', '', AwayTeamName))) %>%
         mutate(HomeTeamName = str_trim(gsub('[0-9]+', '', HomeTeamName))) %>%
-        mutate(Line = as.numeric(Line)) %>% mutate(ProfitLine = as.numeric(ProfitLine)) %>%
-        mutate(Date = as.Date(paste(year, month, day, sep = "-")))
-      
+        mutate(Line = as.numeric(Line)) %>% mutate(Line_Profit = as.numeric(Line_Profit)) %>%
+        mutate(Line = as.numeric(OverUnder)) %>% mutate(Line_OverUnder = as.numeric(Line_OverUnder)) %>%
+        mutate(Date = as.Date(paste(year, month, day, sep = "-"))) %>%
+        rename("MoneyLine" = V3)
+
       }, error = function(e) print(e))
-    
+
     df <- dplyr::bind_rows(df, Odds)
-    
+
   }
   assign("BettingLines", df, envir=globalenv())
 }
