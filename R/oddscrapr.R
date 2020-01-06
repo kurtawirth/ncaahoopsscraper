@@ -87,11 +87,11 @@ oddscrapr = function(x, y) {
       Odds = as.data.frame(matrix(OddsText[Begin : End], ncol = 5, byrow = TRUE)) %>% select(-V1) %>%
         tidyr::separate(V2, into = c("AwayTeamName", "HomeTeamName"), sep = "vs") %>%
         tidyr::separate(V4, into = c("Line", "Line_Profit"), sep = " ") %>%
-        tidyr::separate(V5, into = c("OverUnder", "Line_OverUnder"), sep = " ") %>%
+        tidyr::separate(V5, into = c("OverUnder", "Profit_OverUnder"), sep = " ") %>%
         mutate(AwayTeamName = str_trim(gsub('[0-9]+', '', AwayTeamName))) %>%
         mutate(HomeTeamName = str_trim(gsub('[0-9]+', '', HomeTeamName))) %>%
         mutate(Line = as.numeric(Line)) %>% mutate(Line_Profit = as.numeric(Line_Profit)) %>%
-        mutate(Line = as.numeric(OverUnder)) %>% mutate(Line_OverUnder = as.numeric(Line_OverUnder)) %>%
+        mutate(OverUnder = as.numeric(OverUnder)) %>% mutate(Profit_OverUnder = as.numeric(Profit_OverUnder)) %>%
         mutate(Date = as.Date(paste(year, month, day, sep = "-"))) %>%
         rename("MoneyLine" = V3)
 

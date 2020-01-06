@@ -1,30 +1,42 @@
 library(dplyr)
 
-Lines = read_csv("D:/Users/Kurt/Documents/Programming/ncaahoopsscraper/data/BettingLines201819.csv") %>% select(-X1) %>%
-  select(Date, TeamName, OpponentName, Line) %>% as.data.frame()
+library(readr)
 
-LinesTeams = select(Lines, TeamName) %>% unique() %>% mutate(label = "Lines")
+Lines = read_csv("D:/Users/Kurt/Documents/Programming/ncaahoopsscraper/data/BettingLines2010_2019.csv") %>% as.data.frame()
 
-BoxScores = read_csv("D:/Users/Kurt/Documents/Programming/ncaahoopsscraper/data/BoxScores/201011.csv") %>% select(-X1) %>%
-  as.data.frame()
-
-BoxScoresTeams = select(BoxScores, TeamName) %>% unique() %>% mutate(label = "BoxScores")
-
-Combined = rbind(BoxScoresTeams, LinesTeams)
+#load("D:/Users/Kurt/Documents/Programming/ncaahoopsscraper/data/BoxScores/boxscores_total.RDA")
+#
+# BoxScoresTeams = select(BoxScores, TeamName) %>% unique() %>% mutate(label = "BoxScores")
+#
+# Combined = rbind(BoxScoresTeams, LinesTeams)
+#
 
 load("~/Programming/project/data/notd1teams.RDA")
 
-Outliers = Combined %>% group_by(TeamName) %>% filter(n() == 1) %>% group_by() %>% mutate(TeamName = as.character(TeamName)) %>% arrange(TeamName) %>%
-  filter(!(TeamName %in% notd1teams))
+#
+# Outliers = Combined %>% group_by(TeamName) %>% filter(n() == 1) %>% group_by() %>% mutate(TeamName = as.character(TeamName)) %>% arrange(TeamName) %>%
+#   filter(!(TeamName %in% notd1teams))
 
-TeamNames = read_csv("~/Programming/project/data/LinesNamesCorrections.csv") %>% as.data.frame() %>% rename(TeamName = LinesNames) %>%
-  rename(TeamNames = BoxScoresNames)
+load("~/Programming/ncaahoopsscraper/data/BoxScores/advanced_boxscores.RDA")
 
-OpponentNames = read_csv("~/Programming/project/data/LinesNamesCorrections.csv") %>% as.data.frame() %>% rename(OpponentName = LinesNames) %>%
-  rename(OpponentNames = BoxScoresNames)
+Away_Outliers = (Lines %>% filter(!(AwayTeamName %in% notd1teams)) %>%
+  filter(!(AwayTeamName %in% c(advanced_df2$HomeTeamName, advanced_df2$AwayTeamName))))$AwayTeamName %>%
+  unique() %>% sort()
 
-LinesCorrected = Lines %>% full_join(TeamNames) %>% full_join(OpponentNames) %>% mutate(TeamNameNormalized = ifelse(is.na(TeamNames), TeamName, TeamNames)) %>%
-  mutate(OpponentTeamNameNormalized = ifelse(is.na(OpponentNames), OpponentName, OpponentNames)) %>% select(Date, TeamNameNormalized, OpponentTeamNameNormalized, Line) %>%
-  rename(TeamName = TeamNameNormalized, OpponentName = OpponentTeamNameNormalized)
+Home_Outliers = (Lines %>% filter(!(HomeTeamName %in% notd1teams)) %>%
+  filter(!(HomeTeamName %in% c(advanced_df2$HomeTeamName, advanced_df2$AwayTeamName))))$HomeTeamName %>%
+  unique() %>% sort()
 
-write.csv(LinesCorrected, "~/Programming/project/data/LinesNormalized.csv", row.names = FALSE)
+teamcombined_edited <- read_csv("~/Programming/project/data/teamcombined_edited.csv") %>% as.data.frame()
+
+normalized_lines = Lines %>% select(-X1) %>%
+  left_join(teamcombined_edited, by = c("AwayTeamName" = "LinesNames")) %>%
+  rename(AwayTeamName2 = BoxScoresNames) %>% left_join(teamcombined_edited, by = c("HomeTeamName" = "LinesNames")) %>%
+  rename(HomeTeamName2 = BoxScoresNames) %>%
+  mutate(HomeTeamName = ifelse(!is.na(HomeTeamName2), HomeTeamName2, HomeTeamName)) %>%
+  mutate(AwayTeamName = ifelse(!is.na(AwayTeamName2), AwayTeamName2, AwayTeamName)) %>%
+  select(-AwayTeamName2, -HomeTeamName2) %>% group_by(Date, HomeTeamName, AwayTeamName) %>%
+  slice(1) %>% mutate(MoneyLine = ifelse(MoneyLine == "-", NA, MoneyLine)) %>% mutate(MoneyLine = as.numeric(MoneyLine)) %>%
+  mutate(OverUnder = ifelse(OverUnder == "-", NA, OverUnder)) %>% mutate(OverUnder = as.numeric(OverUnder))
+
+write.csv(normalized_lines, "~/Programming/project/data/LinesNormalized.csv", row.names = FALSE)
